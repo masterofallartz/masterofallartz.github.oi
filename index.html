@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<body onload="myFunction()">
+<center><h1>My FREE Timelase</h1></center>
+
+<br><br>
+
+<center><form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="hosted_button_id" value="NTGSBCXG569TG">
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+</form></center>
+
+<br><br>
+
+<body>
+<center><div>Photo SNAP EVERY 5 seconds! <span id="time">00:05</span> seconds!</div></center>
+</body>
+
+<script>
+function time(duration, display) {
+    var timer = duration, minutes, seconds;
+    setInterval(function () {
+        minutes = parseInt(timer / 60, 10)
+        seconds = parseInt(timer % 60, 10);
+
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+        display.textContent = minutes + ":" + seconds;
+
+        if (--timer < 0) {
+            timer = duration;
+        }
+    }, 1000);
+}
+
+function clock () {
+    var fiveSec = 60 * .083,
+        display = document.querySelector('#time');
+    time(fiveSec, display);
+};
+function myStopFunction() {
+    clearInterval(time);
+}
+</script>
+
+<video id="video" width="400" height="325" autoplay></video>
+
+<center><a href="#" class="button1" id="snap" type="button" onclick="my(), clock = setInterval(clock, 5000)" download="0-5sec-timelapse.png">Start!</a><button class="button2" onclick="myStopFunction()">Stop Auto Snap</button></center>
+
+<center><button class="button4" onclick="home()">Home</button></center>
+
+<script>
+function my() {
+    var my = document.getElementById("snap");
+
+    my.onclick = setInterval(function () {
+document.getElementById("snap").click();}, 5000);
+}
+</script>
+
+<canvas id="canvas" width="400" height="325"></canvas>
+
+<style>
+video {
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    width: 400;
+    height: 325;
+}
+
+</style>
+
+<style>
+canvas {
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    width: 400;
+    height: 325;
+}
+</style>
+
+<script>
+// Grab elements, create settings, etc.
+var video = document.getElementById('video');
+// Get access to the camera!
+if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+    // Not adding `{ audio: true }` since we only want video now
+    navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream) {
+        video.src = window.URL.createObjectURL(stream);
+        video.play();
+    });
+}
+/* Legacy code below: getUserMedia 
+else if(navigator.getUserMedia) { // Standard
+    navigator.getUserMedia({ video: true }, function(stream) {
+        video.src = stream;
+        video.play();
+    }, errBack);
+} else if(navigator.webkitGetUserMedia) { // WebKit-prefixed
+    navigator.webkitGetUserMedia({ video: true }, function(stream){
+        video.src = window.webkitURL.createObjectURL(stream);
+        video.play();
+    }, errBack);
+} else if(navigator.mozGetUserMedia) { // Mozilla-prefixed
+    navigator.mozGetUserMedia({ video: true }, function(stream){
+        video.src = window.URL.createObjectURL(stream);
+        video.play();
+    }, errBack);
+}
+*/
+</script>
+
+<script>
+// Elements for taking the snapshot
+var canvas = document.getElementById('canvas');
+var context = canvas.getContext('2d');
+var video = document.getElementById('video');
+function myFunction() {
+    setInterval(function(){
+	context.drawImage(video, 0, 0, 400, 325); }, 5000);
+}
+// Converts canvas to an image
+function convertCanvasToImage(canvas, callback) {
+  var image = new Image();
+  image.onload = function(){
+    callback(image);
+  }
+  image.src = canvas.toDataURL("image/png");
+}
+var button = document.getElementById('snap');
+button.addEventListener('click', function (e) {
+    var dataURL = canvas.toDataURL('image/png');
+    button.href = dataURL;
+});
+</script>
+
+<style>
+.button1 {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+
+.button1 {border-radius: 12px;}
+
+.button1:hover {
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+}
+.button2 {
+    background-color: #FF0000; /* Red */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+
+.button2 {border-radius: 12px;}
+
+.button2:hover {
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+}
+.button3 {
+    background-color: #8B008B; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+
+.button3 {border-radius: 12px;}
+
+.button3:hover {
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+}
+.button4 {
+    background-color: #4169e1; /* Red */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+
+.button4 {border-radius: 12px;}
+
+.button4:hover {
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
+}
+</style>
+
+<uses-permission android:name="android.permission.CAMERA" />
+<uses-permission android:name="android.permission.CAPTURE_VIDEO_OUTPUT" />
+
+<script>
+public void iniciaWebView(){
+    mWebView = (AdvancedWebView) findViewById(R.id.webview);
+    mWebView.setListener(this, this);
+    mWebView.setGeolocationEnabled(true);
+    mWebView.addHttpHeader("X-Requested-With", appNomeLogs);
+
+    mWebView.setWebChromeClient(new WebChromeClient() {
+        @Override
+        public void onPermissionRequest(final PermissionRequest request) {
+            Log.i(appNomeLogs, "|> onPermissionRequest");
+
+            MainActivity.this.runOnUiThread(new Runnable(){
+                @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+                @Override
+                public void run() {
+                    Log.i(appNomeLogs, "|> onPermissionRequest run");
+                    request.grant(request.getResources());
+                }// run
+            });// MainActivity
+
+        }// onPermissionRequest
+    });// setWebChromeClient
+
+    mWebView.loadUrl(url);
+}// iniciaWebView
+</script>
